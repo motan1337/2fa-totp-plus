@@ -1,0 +1,16 @@
+{
+  "name": "2fa-totp-plus",
+  "version": "2.3.0",
+  "private": true,
+  "description": "TOTP two factor authentication plugin for HFS",
+  "author": "motan1337",
+  "repository": "github:motan1337/2fa-totp-plus",
+  "license": "GPL-3.0",
+  "scripts": {
+    "build": "bash build_deps.sh",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "qrcode": "1.5.4"
+  }
+}
