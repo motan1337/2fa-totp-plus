@@ -45,6 +45,9 @@ A code is required by every login that goes through HFS login APIs, including th
 the web UI. Sessions that never passed the check are logged out on their next request, so enabling 2FA
 also kicks out sessions of that account opened elsewhere, including sessions opened before 2FA existed.
 
+Usernames are not case sensitive in HFS, Admin and admin are the same account, so the username can be
+typed in any case. The code is required either way.
+
 Some HFS features cannot carry a code, and for an account with 2FA they behave as follows:
 
 - HTTP basic auth, WebDAV clients, and ?login=user:pass urls are refused with 401, unless the
