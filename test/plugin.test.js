@@ -285,6 +285,20 @@ test('setup must be confirmed with a code, the secret is not disclosed afterward
     await assert.rejects(rest.hfs2fa_status({}, t.ctxFor()), e => e === 'Not logged in')
 })
 
+test('without an issuer, the host of base_url is used', async () => {
+    const t = await setup()
+    t.config.issuer = ''
+    const ctx = t.ctxFor({ session: { username: 'alice' } })
+    ctx.state.account = { username: 'alice' }
+    for (const base of ['files.example.com', 'https://files.example.com:8443/hfs', 'https://https://files.example.com']) {
+        t.api.getHfsConfig = () => base
+        const { uri } = await t.pl.customRest.hfs2fa_setup({}, ctx)
+        assert.ok(uri.startsWith('otpauth://totp/files.example.com:alice?'), base)
+    }
+    t.api.getHfsConfig = () => ''
+    assert.ok((await t.pl.customRest.hfs2fa_setup({}, ctx)).uri.startsWith('otpauth://totp/HFS:alice?'))
+})
+
 test('admins can reset 2FA from the config, renamed accounts keep it', async () => {
     const t = await setup()
     t.store.set('alice', { base32: SECRET })
