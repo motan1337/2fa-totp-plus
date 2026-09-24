@@ -1,10 +1,11 @@
-exports.version = 2.3
+exports.version = 2.31
 exports.description = "Two factor authentication (TOTP) for HFS logins, works with Google Authenticator, Aegis, Authy and similar apps"
 exports.apiRequired = 13.5 // finalizingLogin gets via
 exports.frontend_js = ['main.js']
 exports.repo = "motan1337/2fa-totp-plus"
 exports.preview = ["https://github.com/user-attachments/assets/89e0c41b-6a74-4c6a-becc-072517c72d97","https://github.com/user-attachments/assets/8edb44a7-7949-4242-8fa7-de18da0e48e4","https://github.com/user-attachments/assets/e4f4ea64-ac6a-4274-84ea-9a1078c5f99f"]
 exports.changelog = [
+    { "version": 2.31, "message": "Fixed the issuer shown in authenticator apps when base_url was saved by HFS 3.3.2 with the protocol twice." },
     { "version": 2.3, "message": "Requires HFS 3.3.2 or newer, and uses the login origin that HFS now passes instead of guessing it. Older HFS can use motan1337/2fa-totp-legacy-plus." },
     { "version": 2.2, "message": "Requires HFS 3.3 or newer, and only uses its official login veto." },
     { "version": 2.1, "message": "On HFS 3.3 and newer, logins are refused through the official finalizingLogin veto. A refused login no longer logs out a session that was already verified." },
@@ -250,8 +251,8 @@ exports.init = async api => {
     function getIssuer() {
         let issuer = api.getConfig('issuer')
         const base = !issuer && api.getHfsConfig('base_url')
-        if (base)
-            try { issuer = new URL(/^\w+:\/\//.test(base) ? base : 'http://' + base).hostname }
+        if (base) // hfs 3.3.2 could save it with the protocol twice
+            try { issuer = new URL('http://' + base.replace(/^(\w+:\/\/)+/, '')).hostname }
             catch {}
         return String(issuer || '').replace(/:/g, '').trim().slice(0, 64) || 'HFS'
     }
