@@ -1,6 +1,6 @@
 {
   "name": "2fa-totp-plus",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "private": true,
   "description": "TOTP two factor authentication plugin for HFS",
   "author": "motan1337",
