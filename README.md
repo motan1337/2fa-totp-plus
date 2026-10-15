@@ -6,8 +6,6 @@ This plugin adds TOTP two factor authentication to HFS logins, with any authenti
 Requires HFS 3.3.2 or newer (plugin API 13.5). For older HFS there is
 https://github.com/motan1337/2fa-totp-legacy-plus
 
-Made by motan1337, starting from the original hfs-2fa by damienzonly, which is no longer maintained.
-
 ## Installing
 
 In the admin panel open Plugins, search for motan1337 or 2fa-totp, and install 2fa-totp-plus.
@@ -65,7 +63,7 @@ Secrets are stored in plain text in the plugin storage, plugins/2fa-totp-plus/st
 standard install, as HFS storage has no encryption. Protect that file and your backups the way you
 protect the accounts file.
 
-## Coming from the original plugin
+## Coming from the original plugin hfs-2fa by damienzonly
 
 Enrollments live in the storage folder of the plugin, and HFS installs this one in its own folder,
 plugins/2fa-totp-plus, so it would start empty and nobody would be asked for a code. The simple way is
